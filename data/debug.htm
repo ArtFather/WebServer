@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div>
+        Status       : <span id="Status">0</span><br>
+        ADC Value is : <span id="ADCValue">0</span><br>
+         BMP280 Temp : <span id="BMPTemp">0</span><br>
+            Pressure : <span id="BMPPres">0</span><br>
+            DHT Temp : <span id="DHTTemp">0</span><br>
+             DHT Hum : <span id="DHTHum">0</span><br>
+            SHT Temp : <span id="SHTTemp">0</span><br>
+            SHT Hum  : <span id="SHTHum">0</span><br>
+                 LUX : <span id="Lux">0</span><br>
+    </div>
+
+    <script>
+        setInterval(function () { 
+            getData();
+        }, 500);
+
+        function getData() {
+             document.getElementById("Status").innerHTML = '1'; 
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                 document.getElementById("Status").innerHTML = '2'; 
+                     if (this.readyState == 4 && this.status == 200) {
+                         document.getElementById("Status").innerHTML = '3';
+                        var jsonObj = JSON.parse(xhttp.responseText);
+                        document.getElementById("ADCValue").innerHTML  = jsonObj.ADCValue;
+                        document.getElementById("BMPTemp").innerHTML   = jsonObj.BMPTemp;
+                        document.getElementById("BMPPres").innerHTML   = jsonObj.BMPPres;
+                        document.getElementById("DHTTemp").innerHTML   = jsonObj.DHTTemp;
+                        document.getElementById("DHTHum").innerHTML    = jsonObj.DHTHum;
+                        document.getElementById("SHTTemp").innerHTML   = jsonObj.SHTTemp;
+                        document.getElementById("SHTHum").innerHTML    = jsonObj.SHTHum;
+                        document.getElementById("Lux").innerHTML       = jsonObj.Lux;
+                }
+            };
+            xhttp.open("GET", 'data', true);
+            xhttp.send();
+        }
+    </script>
+</body>
+
+</html>
